@@ -1,0 +1,118 @@
+h2{
+
+    width: 100%;
+    font-family: Serif;
+    font-size: 30px;
+    /* margin-left: 23px; */
+    font-weight: bold;
+    color: rgb(72, 64, 64);
+    line-height: 80px;
+    margin-bottom: 10px;
+    margin-top: 0;
+    
+}
+
+p{
+    font-size: 15px;
+    margin-left: 23px;
+    margin-right: 10px;
+    font-family: 'Bitter', sans-serif;
+    font-weight: 100;
+    line-height: 20px;
+}
+
+.Population_Age_Gender{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.Nationality {
+    display: flex;
+
+}
+
+.Piechart {
+    display: flex;
+
+}
+
+
+.container{
+    width: 1500px;
+    height: 100%;
+     background-position: center;
+    background-size:contain;
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper{
+    width: 1100px;
+    padding-bottom: 10px;
+}
+
+.title {
+    color: rgb(54, 36, 6);
+    text-shadow: 5px 5px 4px #cbc3c3;
+    font: weight 900px;
+    font-size: 30px;
+    font-family: Serif;
+    text-align: center;
+}
+
+.content{
+    margin-top: -50px;
+    width: 1100px;
+    border-radius: 8px;
+    background: white;
+
+}
+
+
+/* Text decoration */
+.male_text{
+    color: #b350de;
+    font-weight: bold;
+}
+
+.female_text{
+    color: orange;
+    font-weight: bold;
+}
+
+
+.bold{
+    font-weight: bold;
+}
+
+
+.China_text {
+    font-weight: bold;
+    color: #f28e2b;
+}
+
+.India_text {
+    color:  #c9c776;
+    font-weight: bold;
+}
+
+.Singapore_text {
+    color:  #8452bd;
+    font-weight: bold;
+}
+
+.Thailand_text {
+    color:  #5aa24f;
+    font-weight: bold;
+}
+
+.Korea_text {
+    color:  #9c755f;
+    font-weight: bold;
+}
+
+.Vietnam_text {
+    color:  #bea3d5;
+    font-weight: bold;
+}

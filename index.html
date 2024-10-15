@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+<link rel="stylesheet" href="styles.css">
+<title>Malaysia Resident Profile in 2024</title>
+
+</head>
+<body>
+    <div class="container">
+        <div class="wrapper">
+
+
+            <div class="title">
+                <h1>Malaysia's Population Portrait in 2024</h1>
+            </div>
+            <hr style="width:100%;">
+            <br><br><br><br>
+
+        
+
+            <div class="content" >
+                
+                <div class="section1", style="width: 100%; justify-content: center; ">
+                    <div id="section1">
+                    </div>
+                </div>
+
+                <div class="Population_Age_Gender">
+                    <div>
+                        <p style="width: 450px;">
+                            By clicking on a state in the map above, the population breakdown of <span class="male_text">males</span> and <span class="female_text">females</span> is displayed in the donut chart.
+                        </p>
+                        <p>
+                            Interestingly, in almost every state, the <span class="male_text">males</span> population is larger than the <span class="female_text">females</span> population.
+                        </p>
+                        <p style="width: 450px;">
+                            Additionally, by clicking on the slice of donut chart, it will filter the gender population by each age group in bar chart on the right.
+                        </p>
+                    </div>
+                    <div>
+                        <p style="margin-left: 70px;">
+                            The bar chart shows the population distribution across different age groups for each state. 
+                            In most states, the <span style="color:rgb(40, 160, 215);">age groups of 20-24, 25-29, and 30-34 have larger populations</span> compared to other age groups, reflecting a strong presence of working-age individuals. 
+                            Suprisingly, <span class="bold", style="color:rgb(40, 160, 215);">Terengganu</span> stands out with the <span style="color:rgb(40, 160, 215);">0-4 age group having the largest population</span>, suggesting a younger demographic and possibly higher birth rates. 
+                        </p>
+                        <p style="margin-left: 70px;">    
+                            Remarkably, as the age increases, the <span class="female_text">female</span> population tends to surpass the <span class="male_text">male</span> population, indicating a shift in demographic patterns in older age groups.
+                        </p>   
+                    </div>
+                </div>
+                <br>
+                
+                <hr style="width:100%;">
+                
+                <h2>Shifting Borders: Nationality Trends in Immigration (2013-2023)</h2>
+                <div class="Nationality">
+                    <div id="nationality">
+                    </div>
+                    <div style="margin-left: 50px; padding:0;">
+                        <p>
+                            The chart on the left compares the population <span class="bold">rankings of the top 10 countries</span> of origin for residents from overseas in Malaysia, based on the 2023 census.
+                            <br><br>
+                            By comparing with previous census results, it is evident that residents from <span class="Singapore_text">Singapore</span> and <span class="India_text">India</span> have consistently <span class="bold">ranked first and second</span>, respectively, ahead of other countries.
+                            <br><br>
+                            In 2023, the residents from <span class="Thailand_text">Thailand</span> come out on top among overseas residents in Malaysia, boasting a population of <span class="bold">1,551 thousand</span>, surpassing that of <span class="China_text">China</span>, which has around <span class="bold">1,441 thousand</span> residents.
+                            <br><br>
+                            Notably, <span class="Korea_text">South Korea</span> experienced the fastest rise in rankings, <span class="bold">jumping three places</span> since the last census interval in 2018. Meanwhile, <span class="Vietnam_text">Vietnam</span> has also seen <span class="bold">steady growth</span>, climbing from tenth to eighth place in recent years.
+                        </p>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+                <hr style="width:100%;">
+
+                <h2>Life and Loss: Insights into Population Dynamics</h2>
+                <div class="areachart">
+                    <div id="areachart">
+                    </div>
+                </div>
+                <br><br>
+                <div class="Piechart", style="margin-left: 60px;">
+                    <div id="piechart">
+                    </div>
+                    <div style="margin-left: 30px;">
+                        <p>
+                            The chart above illustrates the trends in natural population increase over time. 
+                            In <span class="bold">2021</span>, there was a <span class="bold">significant drop in the natural increase</span>, primarily attributed to a surge in deaths, which <span class="bold">reached 224,569</span>. 
+                            This drop is particularly concerning as it highlights the ongoing impact of health crises on population dynamics.
+                            <br><br>
+                            To identify the cause of this decline, we turn to the exploded bar chart on the left, 
+                            which reveals that <span class="bold", style="color: #b03a19;">COVID-19 infections</span> were the leading contributor, 
+                            resulting in 31,063 deaths, accounting for <span class="bold", style="color: #b03a19;">nearly 19.8% of the total deaths</span>.
+                            <br><br>
+                            Next, we examine which areas faced the most severe <span class="bold", style="color: #b03a19;">COVID-19 infections</span> in 2021. 
+                            The chart below indicates that regions with <span class="bold">higher population density experienced greater total deaths</span>. 
+                            This correlation suggests that densely populated areas, such as <span class="bold", style="color: #f08080;">Labuan</span> and <span class="bold", style="color: #e9b0b0;">Kuala Lumpur</span>, 
+                            were more susceptible to widespread outbreaks due to the close proximity of residents.
+                        </p>
+                    </div>
+                </div>
+                <br><br>
+                <div class="scatterplot">
+                    <div id="scatterplot">
+                    </div>
+                </div>
+                
+            </div>
+
+            <!-- <div class="pure-g"> -->
+            <br><br>
+            <div class="pure-u-1-1 small-font">
+                <p>This visualisation is created by <a href="https://github.com/kyingshan" target="_blank">Khor Ying Shan </a> (33410488) for Data Visualisation Assignment 2. </p>
+                <p> Data source is extracted from <a href="https://open.dosm.gov.my/data-catalogue" target="_blank">OpenDOSM</href></a>,<a href="https://data.moh.gov.my/data-catalogue" target="_blank">KKMNOW</href></a> and <a href="https://newss.statistics.gov.my/newss-portalx/ep/epProductFreeDownloadSearch.seam" target="_blank">eStatistics</href></a>. </p>
+                </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</body>
+<script>
+    
+    var section1 = "newmap.json";
+    vegaEmbed("#section1", section1, {"actions": false}).then(function(result){}).catch(console.error);
+    
+    var section2 = "nationality.json";
+    vegaEmbed("#nationality", section2, {"actions": false}).then(function(result){}).catch(console.error);
+    
+    var section3 = "areachart.json";
+    vegaEmbed("#areachart", section3, {"actions": false}).then(function(result){}).catch(console.error);
+
+    var section4 = "piechart.json"; //The rates are per 1,000 population
+    vegaEmbed("#piechart", section4, {"actions": false}).then(function(result){}).catch(console.error);
+
+    var section5 = "scatterplot.json"; //The rates are per 1,000 population
+    vegaEmbed("#scatterplot", section5, {"actions": false}).then(function(result){}).catch(console.error);
+   
+    </script>
+</html>

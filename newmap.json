@@ -1,0 +1,366 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "vconcat": [
+        {
+            
+            "title": {
+              "text": "Population by State in Malaysia (2024)",
+              "fontSize": 25,
+              "font": "Serif",
+              "offset": 25
+            },
+            "width": 1090,
+            "height": 480,
+            "projection": {"type": "equalEarth", "center": [97, 8.2], "scale": 2800},
+            "data": {
+                  "url": "https://raw.githubusercontent.com/kyingshan/FIT3179_A2/refs/heads/main/mine/js/malaysia.json",
+                  "format": {"type": "topojson", "feature": "malaysia.state"}
+                },
+            "layer": [
+              {
+                
+                "transform": [
+                  {
+                    "calculate": "'Data is not available in ' + datum.properties.name",
+                    "as": "note"
+                  }
+                ],
+                "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"},
+                "encoding": {"tooltip": {"field": "note"}}
+              },
+              {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/7_others/oceans.topojson",
+                  "format": {"type": "topojson", "feature": "oceans"}
+                },
+                "mark": {"type": "geoshape", "fill": "#d8dde2"}
+              },
+              {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/kyingshan/FIT3179_A2/refs/heads/main/mine/js/ne_10m_graticules_5.json",
+                  "format": {"type": "topojson", "feature": "ne_10m_graticules_5"}
+                },
+                "mark": {"type": "geoshape", "fill": null, "stroke": "lightgray"}
+              },
+              {
+                
+                "transform": [
+                  {
+                    "lookup": "properties.name",
+                    "from": {
+                      "data": {
+                        "url": "https://raw.githubusercontent.com/kyingshan/FIT3179_A2/refs/heads/main/mine/dataset/section1/population_state_year.csv",
+                        "format": {"type": "csv"}
+                      },
+                      "key": "State",
+                      "fields": ["State","Population", "Area","Males","Females"]
+                    }
+                  },
+                  {
+                    "calculate": "round(datum.Population * 1000 / datum.Area * 100) / 100",
+                    "as": "Population Indensity"
+                  },
+                  {
+                    "calculate": "datum.Population * 1000",
+                    "as": "Population"
+                  },
+                  {
+                    "calculate": "datum.properties.name == 'WP Kuala Lumpur' ? 'Kuala Lumpur' : datum.properties.name",
+                    "as": "State_name"
+                  },
+                  {
+                    "calculate": "datum.State_name == 'WP Putrajaya' ? 'Putrajaya' : datum.State_name",
+                    "as": "State_name"
+                  },
+                  {
+                    "calculate": "datum.State_name == 'WP Labuan' ? 'Labuan' : datum.State_name",
+                    "as": "State_name"
+                  }
+                      
+                ],
+                "mark": {"type": "geoshape", "stroke": "#b6a9a9", "strokeWidth": 0.5, "cursor":"pointer"},
+                "params": [
+                  {"name": "select_area", "select":{"type": "point", "fields": ["Population Indensity"]}}
+                ],
+                "encoding": {
+                  "fillOpacity":{
+                    "condition": {"param": "select_area", "value": 1},
+                    "value": 0.2
+                  },
+                  "color": {
+                    "field": "Population Indensity",
+                    "type": "quantitative",
+                    "scale": {
+                      "type": "threshold",
+                      "domain": [10, 50, 100, 200, 500, 2000, 5000],
+                      "range": [
+    "#edf8fb",  
+    "#b3e2f9",  
+    "#7fd0f0",  
+    "#39a6d3",  
+    "#0f6c9d",  
+    "#0a4f7e", 
+    "#053861"  
+]
+
+                    },
+                    "legend": {
+                      "title": "Population Density (per km²)",
+                      "orient": "bottom-right",
+                      "direction": "horizontal"
+                    }
+                  },
+                  "tooltip": [
+                    {"field": "State_name", "title": "State"},
+                    {"field": "Population", "title": "Population", "format": ","},
+                    {"field": "Area", "type": "nominal", "title": "Area(km²)", "format": ","},
+                    {"field": "Population Indensity", "title": "Population Density(per km²)","format": ","}
+                  ]
+                }
+              },
+              {
+        "data":{
+          "url": "https://raw.githubusercontent.com/kyingshan/FIT3179_A2/refs/heads/main/mine/dataset/section1/population_state_year.csv",
+          "format":{ "type": "csv" }
+        },
+        "mark": {"type": "geoshape", "stroke": "#fff", "strokeWidth": 0.5},
+        "transform": [
+            {
+              "lookup": "State",
+              "from": {
+                "data": {
+                  "url": "https://raw.githubusercontent.com/kyingshan/FIT3179_A2/refs/heads/main/mine/js/malaysia.json",
+                  "format": {"type": "topojson", "feature": "malaysia.state"}
+                },            
+                "key": "properties.name"
+              }
+            }
+            
+        ],
+        "params": [
+          {"name": "select_area_interact", "select":{"type": "point", "fields": ["State"]}}
+        ]
+      }
+    ]
+    },
+      {
+        "hconcat": [
+  
+          {
+            "transform": [{"filter": {"param": "select_area_interact"}},
+            {"calculate": "datum.Population * 1000", "as": "Total_Population"}
+            ],
+            "width": 450,
+            "height": 250,
+            "title": {
+              "text": "Population by gender",
+              "dy": -15,
+              "font": "sans-serif"
+            },
+            
+            "data": {
+              "url": "https://raw.githubusercontent.com/kyingshan/FIT3179_A2/refs/heads/main/mine/dataset/Population_Total_By_Age_Gender.csv",
+              "format":{ "type": "csv" }
+            },
+            "layer": [
+              {
+                "params": [
+                  {
+                    "name": "highlight",
+                    "select": {"type": "point", "on": "mouseover"}
+                  },
+                  {"name": "select", "select":{"type": "point", "fields": ["Gender"]}}
+                ],
+                "mark": {"type": "arc", "innerRadius": 50, "cursor": "pointer"},
+                "encoding": {
+                  "fillOpacity":{
+                    "condition": {"param": "select", "value": 1},
+                    "value": 0.3
+                  },
+                  "theta": {"aggregate":"sum", "field":"Total_Population", "stack": "normalize"},
+                  "color": {
+                    "field": "Gender",
+                    "scale":{
+                      "range":[
+                        "#f28e2b",
+                        "#855d96"
+                      ]
+                    }
+                  },
+  
+  
+                  "strokeWidth": {
+                    "condition": [
+                      {
+                        "param": "select",
+                        "empty": false,
+                        "value": 2
+                      },
+                      {
+                        "param": "highlight",
+                        "empty": false,
+                        "value": 1
+                      }
+                    ],
+                    "value": 0
+                  }
+                }
+              },
+              {
+                "data":{
+                  "url": "https://raw.githubusercontent.com/kyingshan/FIT3179_A2/refs/heads/main/mine/dataset/Population_Total_By_Age_Gender.csv",
+                  "format":{ "type": "csv" }
+                },
+                "transform": [
+                  {"filter": {"param": "select_area_interact"}},
+                  {"calculate": "datum.Population * 1000", "as": "Total_Population"},
+                  {
+                    "aggregate":[{"op": "sum","field": "Total_Population","as": "population_total"}]
+                  }
+                ],
+  
+                "mark": {"type":"text", "color": "black", "radius": -10},
+  
+                "encoding": {
+                  "text": {
+                    "field": "population_total",
+                    "format":","
+                  }
+                }
+              },
+              {
+                "mark": {"type":"text", "color": "black","fontSize":13, "dy":-10, "fontWeight": 100, "text":"Total"}
+              },
+              {
+                "mark": {"type":"text",
+                "color": "white",
+                "fontSize":33, 
+                "dx":-80, 
+                "fontWeight": "bold", 
+                "text":"👦🏻"}
+              },
+              {
+                
+                "data":{
+                  "url": "https://raw.githubusercontent.com/kyingshan/FIT3179_A2/refs/heads/main/mine/dataset/Population_Total_By_Age_Gender.csv",
+                  "format":{ "type": "csv" }
+                },
+                "transform": [
+                  {"filter": {"param": "select_area_interact"}},
+  {"calculate": "datum.Population * 1000", "as": "Total_Population"},
+                  {
+                    "aggregate":[{"op": "sum","field": "Total_Population","as": "population_by_male"}],
+                    "groupby": ["Gender"]
+                  },
+                  {
+                    "filter": "datum.Gender == 'male'"
+                  }
+  
+                ],
+  
+                "mark": {"type":"text", "color": "white","fontSize":14, "dx":-80, "dy":30},
+                "encoding": {
+                  "text":{
+                    "field":"population_by_male",
+                    "format":","
+                  }
+                }
+              },
+              {
+                "mark": {"type":"text", "color": "white","fontSize":33, "dx":80, "fontWeight": "bold", "text":"👩🏻"}
+              },
+              {
+                
+                "data":{
+                  "url": "https://raw.githubusercontent.com/kyingshan/FIT3179_A2/refs/heads/main/mine/dataset/Population_Total_By_Age_Gender.csv",
+                  "format":{ "type": "csv" }
+                },
+                "transform": [
+                  {"filter": {"param": "select_area_interact"}},
+                  {"calculate": "datum.Population * 1000", "as": "Total_Population"},
+                  {
+                    "aggregate":[{"op": "sum","field": "Total_Population","as": "population_by_female"}],
+                    "groupby": ["Gender"]
+                  },
+                  {
+                    "filter": "datum.Gender == 'female'"
+                  }
+  
+                ],
+  
+                "mark": {"type":"text", "color": "white","fontSize":14, "dx":80, "dy":30},
+                "encoding": {
+                  "text":{
+                    "field":"population_by_female",
+                    "format":","
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "transform": [{"filter": {"param": "select"}}, {"filter":{"param": "select_area_interact"}},
+            {"calculate": "datum.Population * 1000", "as": "Total_Population"}],
+            "title":
+            {
+              "text": "Population by age groups",
+              "dy": -15,
+              "font": "sans-serif"
+            },
+            "width": 400,
+            "height": 250,
+            "data": {
+              "url": "https://raw.githubusercontent.com/kyingshan/FIT3179_A2/refs/heads/main/mine/dataset/Population_Total_By_Age_Gender.csv",
+              "format":{ "type": "csv"}
+            },
+            "layer": [
+              {
+                "mark": "bar",
+                "encoding": {
+                  "y": {"field": "Age_Groups", "type": "ordinal","title":"Age groups"},
+                  "x": {"aggregate":"sum", "field":"Total_Population", "type": "quantitative", "title":"Population by gender"},
+                  "color": {"field": "Gender", "legend":null},
+                  "tooltip": [
+                    {"field":"Gender", "type": "nominal", "title":"Gender"} ,
+                    {"field":"Age_Groups", "type": "ordinal", "title":"Age groups"},
+                    {"aggregate":"sum","field": "Total_Population", "type": "quantitative", "title": "Population", "format":","}
+                  ]
+              }
+              },
+              {
+                "mark": {"type":"text","opacity": 0.9, "color": "black","fontSize": 9, "dx": 23},
+                "encoding": {
+                  "x": {
+                    "aggregate":"sum",
+                    "field":"Total_Population",
+                    "stack":  "normalize",
+                    "bandPosition": 0.5
+                  },
+                  "y": {
+                    "field": "Age_Groups"
+                  },
+                  "text": {
+                    "aggregate": "sum", "field": "Total_Population",
+                    "title": "Population",
+                    "format":","
+                  }
+                } 
+              }
+            ]
+          }
+        ],
+        "spacing":60
+      }
+    ],
+    "spacing": 40,
+    "config": {
+      "style": {
+        "cell": {
+          "stroke": "transparent"
+        }
+      },
+      "font": "Arial",
+      "title": {"fontSize": 17}
+    }
+  }
+  

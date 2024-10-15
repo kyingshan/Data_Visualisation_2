@@ -1,0 +1,139 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+      "url": "https://raw.githubusercontent.com/kyingshan/FIT3179_A2/refs/heads/main/mine/dataset/section3/state_death.csv"
+    },
+    "transform": [{"calculate": "datum.population*1000/datum.area", "as":"density"}],
+    "hconcat": [
+      {
+        "title": {
+    "text": "Relationship Between Population Density and Total Deaths in 2021",
+    "fontSize": 13,
+    "font": "Arial",
+    "dy": -10
+  },
+        "encoding": {
+          "tooltip": [
+              {"field": "state", "type": "nominal", "title": "State"},
+              {"field": "district", "type": "nominal", "title": "District"},
+              {"field": "death", "type": "quantitative", "title":"Total Deaths", "format": ","},
+              {"field": "density", "type": "quantitative", "title": "Population Density(per km2)", "format": ".2f"}
+            ],
+          "color": {
+            
+            "condition": {
+              "param": "brush",
+              "title": "State",
+              "field": "state",
+              "type": "nominal",
+              "scale": {
+                "domain": [
+                    "Johor", "Kedah", "Kelantan", "Melaka", "Negeri Sembilan",
+                    "Pahang", "Perak", "Perlis", "Pulau Pinang", "Sabah",
+                    "Sarawak", "Selangor", "Terengganu", "Kuala Lumpur", "Labuan", "Putrajaya"
+                  ],
+                  "range": [
+                    "#b3e2cd", "#fdc086", "#c9daff", "#a6d5a6", "#ffb3e6",    
+                    "#bebada", "#80b1d3", "#c2c2f0", "#fdb462", "#8dd3c7",
+                    "#c9e2f5", "#fa9fb5", "#87cefa", "#e9b0b0", "#f08080", "#d9d9d9"
+                  ]
+              }
+              ,
+              "legend": null
+            },
+            "value": "lightgray"
+          },
+          "size": {
+            "title": "Population",
+            "field": "population",
+            "scale": {
+                "type": "threshold",
+                "domain": [10, 50, 100, 500, 1000, 5000],
+                "range": [10, 50, 100, 300, 500, 1000]
+              },
+            "type": "quantitative",
+            "legend": {
+              "title": "Population",
+              "orient": "right", 
+              "direction": "vertical"
+            }
+          },
+           "x": {
+          "field": "density",
+          "type": "quantitative",
+          "title": "Population Density",
+          "axis": {"tickCount": 4},
+          "scale": {"type": "log", "domain": [0.5, 20000]}
+        },
+        "y": {
+          "field": "death",
+          "type": "quantitative",
+          "title":"Total Deaths",
+          "axis": {"tickCount": 4},
+          "scale": {"type": "log", "domain": [0.5, 20000]}
+        }},
+        "width": 450,
+        "height": 300,
+        "mark": "point",
+        "params": [{
+          "name": "brush",
+          "select": {"type": "interval", "encodings": ["x"]}
+        }],
+  
+          "transform": [
+          {"filter": {"param": "click"}}]
+      },
+  
+      {
+        "transform": [
+            {"filter": {"param": "brush"}},
+            {"aggregate": 
+              [
+                {"op":"sum", "field":"death", "as":"total_deaths"},
+                {"op": "sum", "field": "population", "as": "total_population"}
+              ], 
+              "groupby":["state"]},
+            {
+              "calculate": "datum.total_deaths / datum.total_population", "as":"death_rate"
+            }
+        ],
+        "encoding": {
+          "color": {
+            "condition": {
+              "param": "click",
+              "field": "state",
+              "scale": {
+                "domain": [
+                    "Johor", "Kedah", "Kelantan", "Melaka", "Negeri Sembilan",
+                    "Pahang", "Perak", "Perlis", "Pulau Pinang", "Sabah",
+                    "Sarawak", "Selangor", "Terengganu", "Kuala Lumpur", "Labuan", "Putrajaya"
+                  ],
+                  "range": [
+                    "#8dd3c7", "#fa9fb5", "#bebada", "#fb8072", "#80b1d3",    
+                    "#fdb462", "#8dd3c7", "#fa9fb5", "#bebada", "#fb8072",
+                    "#80b1d3", "#fdb462", "#8dd3c7", "#fa9fb5", "#bebada", "#4CAF50"
+                  ]
+              }
+            },
+            "value": "lightgray"
+          },
+          "x": {"field": "death_rate", "type": "quantitative", "axis": {"title": "Death Rate per 1000 Population", "tickCount": 10}},
+          "y": {"title": null, "field": "state", "sort": {"field": "death_rate", "order": "descending"}},
+          "tooltip": [
+            {"field": "state", "type": "nominal", "title":"State"},
+            {"field": "total_deaths", "type": "quantitative", "title":"Total death", "format":","},
+            {"field": "death_rate", "type": "quantitative", "title":"Death Rate", "format":".2f"}
+          ]
+        },
+        "width": 335,
+        "height": 300,
+        "mark": {"type": "bar", "cursor": "pointer"},
+        "params": [{
+          "name": "click",
+          "select": {"type": "point", "encodings": ["color"]}
+        }]
+      }
+    ]
+  }
+  
+  

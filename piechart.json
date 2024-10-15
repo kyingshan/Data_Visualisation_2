@@ -1,0 +1,128 @@
+
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Top 5 Cause of Death in 2021",
+    "fontSize": 13,
+    "font": "Arial",
+    "dy": -10
+  },
+  "width": 435,
+  "height": 350,
+  "data": {
+    "url": "https://raw.githubusercontent.com/kyingshan/FIT3179_A2/refs/heads/main/mine/dataset/section3/death_cause.csv"
+  },
+  "transform": [
+    {"calculate": "datum.percentage + '%'", "as": "percentage_sign"}
+  ],
+  
+  "encoding": {
+    "theta": {"field": "value", "type": "quantitative", "stack": true},
+    "color": {
+      "field": "death_cause", "type": "nominal", "legend": null, 
+      "scale": {
+        "domain": ["COVID-19 infection", "Ischaemic heart diseases","Pneumonia", "Cerebrovascular diseases", "Transport accidents"],
+        "range": ["#b03a19", "#b6a9a9", "#b6a9a9", "#b6a9a9", "#b6a9a9"]
+      }
+    },
+    "tooltip": [
+      {"field": "death_cause", "type": "nominal", "title":"Death Cause"},
+      {"field": "value", "type": "quantitative", "title":"Population", "format":","},
+      {"field": "percentage", "type": "quantitative", "title":"Percentage(%)"}
+    ]
+  },
+  
+  "layer": [
+    {
+      "mark": {"type": "arc", "outerRadius": 100, "stroke": "white", "strokeWidth": 1.5}
+    },
+    {
+      "mark": {"type": "arc", "outerRadius": 120,   "stroke": "white", "strokeWidth": 1.5},
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["COVID-19 infection"]} }]
+    },
+
+
+    {
+      "mark": {"type": "text", "radius": 180, "fontSize": 12, "xOffset": -15, "yOffset":-25 },
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["COVID-19 infection"]} }],
+      "encoding": {"text": { "field": "death_cause", "type": "nominal"}}
+    },
+    {
+      "mark": {"type": "text", "radius": 180, "fontSize": 12, "xOffset": -45, "yOffset":-10 },
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["COVID-19 infection"]} }],
+      "encoding": {"text": { "field": "percentage_sign"}}
+    },
+    {
+      "mark": {"type": "text", "radius": 180, "fontSize": 12, "xOffset": -15, "yOffset":-25 },
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["COVID-19 infection"]} }],
+      "encoding": {"text": { "field": "death_cause", "type": "nominal"}}
+    },
+    {
+      "mark": {"type": "text", "radius": 180, "fontSize": 12, "xOffset": -45, "yOffset":-10 },
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["COVID-19 infection"]} }],
+      "encoding": {"text": { "field": "percentage_sign"}}
+    },
+    {
+      "mark": {"type": "text", "radius": 180, "fontSize": 12, "xOffset": -15, "yOffset":-25 },
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["COVID-19 infection"]} }],
+      "encoding": {"text": { "field": "death_cause", "type": "nominal"}}
+    },
+    {
+      "mark": {"type": "text", "radius": 180, "fontSize": 12, "xOffset": -45, "yOffset":-10},
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["COVID-19 infection"]} }],
+      "encoding": {"text": { "field": "percentage_sign"}}
+    },
+
+    {
+      "mark": {"type": "text", "radius": -100, "fontSize": 12, "xOffset": -55, "yOffset":-10 },
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["Ischaemic heart diseases"]} }],
+      "encoding": {"text": { "value": "Ischaemic"}}
+    },
+    {
+      "mark": {"type": "text", "radius": -100, "fontSize": 12, "xOffset": -42, "yOffset":5 },
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["Ischaemic heart diseases"]} }],
+      "encoding": {"text": { "value": "heart diseases"}}
+    },
+    {
+      "mark": {"type": "text", "radius": -100, "fontSize": 12, "xOffset": -61, "yOffset":20 },
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["Ischaemic heart diseases"]} }],
+      "encoding": {"text": { "field": "percentage_sign"}}
+    },
+
+
+    {
+      "mark": {"type": "text", "radius": 180, "fontSize": 12, "xOffset": -230, "yOffset":75 },
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["Pneumonia"]} }],
+      "encoding": {"text": { "field": "death_cause", "type": "nominal"}}
+    },
+    {
+      "mark": {"type": "text", "radius": 180, "fontSize": 12, "xOffset": -240, "yOffset":90 },
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["Pneumonia"]} }],
+      "encoding": {"text": { "field": "percentage_sign"}}
+    },
+
+    {
+      "mark": {"type": "text", "radius": -10, "fontSize": 12, "xOffset": 110, "yOffset":95 },
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["Cerebrovascular diseases"]} }],
+      "encoding": {"text": { "field": "death_cause", "type": "nominal"}}
+    },
+    {
+      "mark": {"type": "text", "radius": -10, "fontSize": 12, "xOffset": 60, "yOffset":110 },
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["Cerebrovascular diseases"]} }],
+      "encoding": {"text": { "field": "percentage_sign"}}
+    },
+  
+
+    {
+      "mark": {"type": "text", "radius": 100, "fontSize": 12, "xOffset":-70, "yOffset":-15},
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["Transport accidents"]} }],
+      "encoding": {"text": { "field": "death_cause", "type": "nominal"}}
+    },
+    {
+      "mark": {"type": "text", "radius": 100, "fontSize": 12, "xOffset":-105},
+      "transform": [{"filter": {"field": "death_cause", "oneOf": ["Transport accidents"]} }],
+      "encoding": {"text": { "field": "percentage_sign"}}
+    }
+  ]
+}
+
